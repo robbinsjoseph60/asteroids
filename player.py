@@ -5,11 +5,11 @@ from shot import Shot
 
 class Player(CircleShape):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, score):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.pt = 0
-
+        self.score = score
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
@@ -35,6 +35,9 @@ class Player(CircleShape):
             velocity = forward * PLAYER_SHOOT_SPEED
             Shot(self.position.x, self.position.y, velocity)
             self.pt += PLAYER_SHOOT_COOLDOWN
+
+    def increase_score(self, points):
+        self.score += points
 
     def update(self, dt):
         if self.pt > 0:

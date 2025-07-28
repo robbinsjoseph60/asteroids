@@ -24,7 +24,8 @@ def main():
 	Shot.containers = (shots, updatable, drawable)
 	
 	Player.containers = (updatable, drawable)
-	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0)
+	
 
 	while True:
 		for event in pygame.event.get():
@@ -35,12 +36,12 @@ def main():
 
 		for asteroid in asteroids:
 			if asteroid.collides_with(player):
-				print ("Game over!")
+				print (f"Game over!\nScore: {player.score}")
 				sys.exit()
 			for shot in shots:
 				if asteroid.collides_with(shot):
 					shot.kill()
-					asteroid.split()
+					asteroid.split(player)
 				
 			
 		screen.fill("black")

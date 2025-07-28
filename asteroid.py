@@ -2,6 +2,7 @@ import pygame
 import random
 from circleshape import CircleShape
 from constants import *
+from player import Player
 
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
@@ -13,10 +14,17 @@ class Asteroid(CircleShape):
     def update(self, dt):
         self.position += self.velocity * dt
 
-    def split(self):
+    def split(self, player):
         self.kill()
         if self.radius <= ASTEROID_MIN_RADIUS:
+            player.increase_score(10)
             return
+        
+        elif self.radius == ASTEROID_MAX_RADIUS:
+            player.increase_score(1)
+
+        else:
+            player.increase_score(5)
         
         random_angle = random.uniform(20, 50)
         new_vector1 = pygame.math.Vector2.rotate(self.velocity, random_angle)
